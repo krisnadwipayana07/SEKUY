@@ -18,7 +18,7 @@ from django.urls import path
 
 from .views import *
 
-from accounts.views import login_view, register_view, logout_view
+from accounts.views import login_view, register_view, logout_view,AddMateri
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +26,5 @@ urlpatterns = [
     path('accounts/login/', login_view),
     path('accounts/register/', register_view, name="signup"),
     path('accounts/logout/', login_view),
+    path('materi/tambahmateri/', AddMateri)
 ]

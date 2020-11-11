@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}
+tambahmateri
+{% endblock title %}
+
+{% block content %}
+<form action="" method="GET">
+{% csrf_token %}
+{{ form.as_ul }}
+<input type="submit" />
+</form>
+{% endblock content %}
