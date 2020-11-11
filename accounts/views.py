@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 
 from django.contrib.auth import authenticate, get_user_model,login,logout
 
-from .forms import userLoginForm,UserRegisterForm,videoLearning
+from .forms import userLoginForm,UserRegisterForm
 
 def login_view(request):
     next = request.GET.get('next')

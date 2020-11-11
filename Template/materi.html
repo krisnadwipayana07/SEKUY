@@ -7,7 +7,7 @@ Materi
 {% block content %}
 <form action="" method="post">
 {% csrf_token %}
-{{ form }}
+{{ form.as_ul }}
 <input type="submit" />
 </form>
 {% endblock content %

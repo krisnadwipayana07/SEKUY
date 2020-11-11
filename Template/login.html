@@ -12,7 +12,7 @@ Login
     <h1>login</h1>
     <form method="POST" action="">
         {% csrf_token %}
-        {{form}}
+        {{form.as_ul}}
         <input type="submit" />
     </form>
     <a href="{{ signup_url }}">Signup</a>

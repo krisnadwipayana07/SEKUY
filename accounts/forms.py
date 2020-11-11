@@ -55,12 +55,16 @@ class UserRegisterForm(forms.ModelForm):
             raise forms.ValidationError("Kata sandi harus sama")
         return password
 
-class videoLearning(forms.Form):
-    videoName = forms.CharField(label="Nama Video Materi")
-    videoLink = forms.URLField(label="Video Learning", required=False)
+# class videoLearning(forms.Form):
+#     videoName = forms.CharField(label="Nama Video Materi")
+#     videoLink = forms.URLField(label="Video Learning", required=False)
 
-    class Meta:
+#     class Meta:
     
     
-    def clean(self,*args, **kwargs):
-        videoName = self.cleaned_data.get('videoName')
+#     def clean(self,*args, **kwargs):
+#         videoName = self.cleaned_data.get('videoName')
+
+# class Materi(models.Model):
+#     title = models.CharField()
+#     pub_date = forms.DateField()
