@@ -65,7 +65,4 @@ class UserRegisterForm(forms.ModelForm):
 #     def clean(self,*args, **kwargs):
 #         videoName = self.cleaned_data.get('videoName')
 
-class Materi(models.Model):
-    title = models.CharField(max_length=30)
-    pub_date = forms.DateField()
 

@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-
 from django.contrib.auth import authenticate, get_user_model,login,logout
 
-from .forms import userLoginForm,UserRegisterForm,Materi
+from .forms import userLoginForm,UserRegisterForm
+from .models import Materi
 
 def login_view(request):
     next = request.GET.get('next')
@@ -44,12 +44,7 @@ def logout_view(request):
 
 def AddMateri(request):
     next = request.GET.get('next')
-    form = Materi(request.GET or None)
-    if form.is_valid:
-        TambahMateri = form.save()
-        if next:
-            return next
-        return redirect("/")
+    form = Materi(request.POST or None)
     context = {
         'form' :form,
     }
