@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{page_title}}
+{% endblock title %}
+
+{% block content %}
+    <h1>{{page_title}}</h1>
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Thumbnail</th>
+            <th scope="col">Materi</th>
+            <th scope="col">Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% thumbnail item.image "100x100" as im %}
+                <img src="{{ im.url }}">
+            {% endthumbnail %}  
+        </tbody>
+    </table>
+    <a href="{% url 'create'%}">Tambah</a>
+{% endblock content %}

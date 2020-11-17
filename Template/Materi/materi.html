@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{page_title}}
+{% endblock title %}
+
+{% block content %}
+    <h1>{{page_title}}</h1>
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Slug</th>
+            <th scope="col">Body</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for materi in  semua_materi %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{materi.title}}</td>
+                    <td>{{materi.slug}}</td>
+                    <td>{{materi.body}}</td>
+                    <td><a class="btn btn-danger" href="{% url 'hapusMateri' materi.id %}">Hapus</a></td>
+                    <td><a class="btn btn-warning" href="{% url 'updateMateri' materi.id %}">Update</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'create'%}">Tambah</a>
+{% endblock content %}
