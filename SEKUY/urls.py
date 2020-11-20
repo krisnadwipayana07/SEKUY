@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url
 
 from .views import *
 
-from accounts.views import login_view, register_view, logout_view,AddMateri
+from accounts.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,5 +27,11 @@ urlpatterns = [
     path('accounts/login/', login_view),
     path('accounts/register/', register_view, name="signup"),
     path('accounts/logout/', login_view),
-    path('materi/tambahmateri/', AddMateri)
+
+    # Materi Link
+    url(r'sosmed/delete/(?P<delete_id>[0-9]+)$', deleteMateri, name='hapusMateri'),
+    url(r'sosmed/update/(?P<update_id>[0-9]+)$', updateMateri, name='updateMateri'),
+    path('materi/tambahmateri/', createMateri, name="createMateri"),
+    path('materi/', listMateri, name="materi"),
+    
 ]

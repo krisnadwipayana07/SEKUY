@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, get_user_model
 
 User = get_user_model()
 
+from .models import *
+
 class userLoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
@@ -54,14 +56,20 @@ class UserRegisterForm(forms.ModelForm):
             raise forms.ValidationError("Kata sandi harus sama")
         return password
 
-# class videoLearning(forms.Form):
-#     videoName = forms.CharField(label="Nama Video Materi")
-#     videoLink = forms.URLField(label="Video Learning", required=False)
-
-#     class Meta:
+class MateriForm(forms.ModelForm):
+    class Meta:
+        model = Materi
+        fields = [
+            'title',
+            'slug',
+            'body'
+        ]
     
+class VideoPembelajaranForm(forms.ModelForm):
+    class Meta:
+        model = VideoPembelajaran
+        fields = [
+            'materi',
+            'link'
+        ]
     
-#     def clean(self,*args, **kwargs):
-#         videoName = self.cleaned_data.get('videoName')
-
-

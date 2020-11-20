@@ -11,5 +11,11 @@ class Materi(models.Model):
         return "{}".format(self.id)
 
 class VideoPembelajaran(models.Model):
-    name = models.CharField(max_length=40)
-    link = EmbedVideoField()  # same like models.URLField()
+    materi = models.CharField(max_length=40)
+    link = EmbedVideoField()
+    date = models.DateField(auto_now_add=True)
+    
+    def __str__(self):
+        return "{}".format(self.id)
+
+    
