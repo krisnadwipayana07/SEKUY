@@ -42,11 +42,72 @@ def logout_view(request):
     logout(request)
     return redirect('/')
 
+# Views Untuk video Pembelajaran
+
+def listVideoPembelajaran(request):
+    semua_video = VideoPembelajaran.objects.all().order_by('date')
+
+    context = {
+        'page_title':'Video Pembelajaran',
+        'semua_video':semua_video,
+    }
+
+    return render(request,'Video Pembelajaran/video.html',context)
+
+def tambahVideo(request):
+    video_form = VideoPembelajaranForm(request.POST or None)
+
+    if request.method == 'POST':
+        if video_form.is_valid():
+            video_form.save()
+        
+        return redirect('videopembelajaran')
+
+    context = {
+        "page_title" : "Tambah Video",
+        "video_form" : video_form,
+    }
+
+    return render(request,'Video Pembelajaran/tambahvideo.html',context)
+
+def deleteVideo(request,delete_id):
+    VideoPembelajaran.objects.filter(id=delete_id).delete()
+    return redirect('videopembelajaran')
+
+def updateVideo(request,update_id):
+    video_update = VideoPembelajaran.objects.get(id=update_id)
+
+    data = {
+        'materi' : video_update.materi,
+        'link'  : video_update.link,
+    }
+
+    video_form = MateriForm(request.POST or None, initial=data, instance=akun_update)
+
+    if request.method == 'POST':
+        if video_form.is_valid():
+            video_form.save()
+        
+        return redirect('materi')
+
+    context = {
+        "page_title" : "Update Video",
+        "video_form" : video_form,
+    }
+
+    return render(request,'Materi/tambahmateri.html',context)
+
+
+
+
+
+# Views Untuk Materi
+
 def listMateri(request):
     semua_materi = Materi.objects.all().order_by('date')
 
     context = {
-        'page_title':'Instagram',
+        'page_title':'Materi',
         'semua_materi':semua_materi,
     }
 
@@ -62,7 +123,7 @@ def createMateri(request):
         return redirect('materi')
 
     context = {
-        "page_title" : "Tambah Akun",
+        "page_title" : "Tambah Materi",
         "materi_form" : materi_form,
     }
 
@@ -76,9 +137,9 @@ def updateMateri(request,update_id):
     materi_update = Materi.objects.get(id=update_id)
 
     data = {
-        'title' : materi_update.nama_depan,
-        'slug'  : materi_update.nama_belakang,
-        'body'  : materi_update.username,
+        'title' : materi_update.title,
+        'slug'  : materi_update.slug,
+        'body'  : materi_update.body,
     }
 
     materi_form = MateriForm(request.POST or None, initial=data, instance=akun_update)
@@ -90,7 +151,7 @@ def updateMateri(request,update_id):
         return redirect('materi')
 
     context = {
-        "page_title" : "Update Akun",
+        "page_title" : "Update Materi",
         "materi_form" : materi_form,
     }
 

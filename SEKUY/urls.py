@@ -29,9 +29,15 @@ urlpatterns = [
     path('accounts/logout/', login_view),
 
     # Materi Link
-    url(r'sosmed/delete/(?P<delete_id>[0-9]+)$', deleteMateri, name='hapusMateri'),
-    url(r'sosmed/update/(?P<update_id>[0-9]+)$', updateMateri, name='updateMateri'),
+    url(r'materi/delete/(?P<delete_id>[0-9]+)$', deleteMateri, name='hapusMateri'),
+    url(r'materi/update/(?P<update_id>[0-9]+)$', updateMateri, name='updateMateri'),
     path('materi/tambahmateri/', createMateri, name="createMateri"),
     path('materi/', listMateri, name="materi"),
+    
+    # Video Pembelajaran Link
+    url(r'video-pembelajaran/delete/(?P<delete_id>[0-9]+)$', deleteVideo, name='hapusVideo'),
+    url(r'video-pembelajaran/update/(?P<update_id>[0-9]+)$', updateVideo, name='updateVideo'),
+    path('video-pembelajaran/tambahvideo/', tambahVideo, name="tambahVideo"),
+    path('video-pembelajaran/', listVideoPembelajaran, name="videopembelajaran"),
     
 ]

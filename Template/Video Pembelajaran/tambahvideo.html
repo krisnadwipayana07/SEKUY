@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ page_title }}
+{% endblock title %}
+
+{% block content %}
+    <h1>{{ page_title }}</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {{video_form.as_table}}
+        </table>
+        <button type="submit">Kirim</button>
+    </form>
+{% endblock content %}
