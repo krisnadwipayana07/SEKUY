@@ -1,16 +1,15 @@
 from django.db import models
-
+from embed_video.fields import EmbedVideoField
 # Create your models here.
-class isiMateri(models.Manager):
-    def buatMateri(self, judul, comment, *args , **kwargs):
-        materi = self.create(judul=judul,comment=comment)
-        return materi
-
 class Materi(models.Model):
-    judul = models.CharField(max_length=30)
-    comment = models.CharField(max_length=3000)
+    title = models.CharField(max_length=30)
+    slug = models.SlugField()
+    body = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
 
-    if judul and command :
-        objects = isiMateri()
+    def __str__(self):
+        return "{}".format(self.id)
 
-materi = Materi.objects.buatMateri("Judul Materi","Isi Materi")
+class VideoPembelajaran(models.Model):
+    name = models.CharField(max_length=40)
+    link = EmbedVideoField()  # same like models.URLField()
