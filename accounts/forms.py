@@ -1,8 +1,7 @@
-from django.db import models
+from django.db import models, transaction
 from django import forms
-from django.contrib.auth import authenticate, get_user_model
-
-User = get_user_model()
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate
 
 from .models import *
 
@@ -21,41 +20,47 @@ class userLoginForm(forms.Form):
             if not user.check_password(password):
                 raise forms.ValidationError('Password yang anda masukan salah')
             if not user.is_active:
-                raise forms.ValidationError('User tidak active')
+                raise forms.ValidationError('User tidak ada')
         
         return super(userLoginForm, self).clean(*args, **kwargs)
 
+class MuridRegisterForm(UserCreationForm):
+    email=forms.EmailField(required=True)
 
-
-class UserRegisterForm(forms.ModelForm):
-    first_name = forms.CharField (label='Nama Depan')
-    last_name = forms.CharField (label='Nama Belakang')
-    email = forms.EmailField (label='Email Address')
-    phonenumber = forms.CharField(max_length=100,min_length=5)
-    DateOfBirth = forms.DateField ()
-    password = forms.CharField (widget=forms.PasswordInput)
-    password2 = forms.CharField (widget=forms.PasswordInput, label="Password Confirmation")
-
-    class Meta:
+    class Meta(UserCreationForm.Meta):
         model = User
-        fields = [
-            'first_name',
-            'last_name',
-            'username',
-            'email',
-            'phonenumber',
-            'DateOfBirth',
-            'password',
-            'password2'
-        ]
-    
-    def clean_password(self):
-        password = self.cleaned_data.get('password')
-        password2 = self.cleaned_data.get('password2')
-        if password == password2:
-            raise forms.ValidationError("Kata sandi harus sama")
-        return password
 
+    @transaction.atomic
+    def save(self):
+        user = super().save(commit=False)
+        user.email=self.cleaned_data.get('email')
+        user.is_student = True
+        user.save()
+        student = Student.objects.create(user=user)
+        return user
+
+class GuruRegisterForm(UserCreationForm):
+    email=forms.EmailField(required=True)
+    phone=forms.CharField(required=True)
+    destionation=forms.CharField(label="Materi Yang Diajar",required=True)
+
+    class Meta(UserCreationForm.Meta):
+        model = User
+
+    @transaction.atomic
+    def save(self):
+        user = super().save(commit=False)
+        user.email=self.cleaned_data.get('email')
+        user.is_teacher = True
+        user.save()
+        teacher = Teacher.objects.create(user=user)
+        teacher.phone=self.cleaned_data.get('phone')
+        teacher.destionation=self.cleaned_data.get('destionation')
+        teacher.save()
+
+        return teacher
+
+# Fitur Views
 class MateriForm(forms.ModelForm):
     class Meta:
         model = Materi

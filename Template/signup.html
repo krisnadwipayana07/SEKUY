@@ -1,13 +1,20 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}
-Signup
+Daftar Akun
 {% endblock title %}
 
 {% block content %}
-<form action="" method="post">
-{% csrf_token %}
-{{ form.as_ul }}
-<input type="submit" />
-</form>
+<div class="row justify-content-center">
+        <div class="col-8">
+          <h1 class="mt-2">Daftar Akun</h1>
+          <hr class="mt-0 mb-4">
+            <form method="POST" novalidate>
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-success">Daftar</button>
+                </form>
+        </div>
+    </div>
 {% endblock content %}

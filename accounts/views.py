@@ -1,42 +1,51 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, get_user_model,login,logout
+from django.contrib.auth import login, logout
+from django.views.generic import CreateView
 
 from .forms import *
 from .models import *
 
-def login_view(request):
-    next = request.GET.get('next')
+def LoginView(request):
     form = userLoginForm(request.POST or None)
     if form.is_valid():
         username = form.cleaned_data.get('username')
         password = form.cleaned_data.get('password')
         user = authenticate(username=username, password=password)
         login(request, user)
-        if next:
-            return redirect(next)
         return redirect('/')
     context = {
         'form': form,
     }
     return render(request,"login.html", context)
 
-def register_view(request):
-    next = request.GET.get('next')
-    form = UserRegisterForm(request.POST or None)
-    if form.is_valid():
-        user = form.save(commit=False)
-        password = form.cleaned_data.get('password')
-        user.set_password(password)
-        user.save()
-        new_user = authenticate(username=user.username, password=password)
-        login(request, new_user)
-        if next:
-            return redirect(next)
+class MuridRegisterView(CreateView):
+    model = User
+    form_class = MuridRegisterForm
+    template_name = 'signup.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['user_type'] = 'student'
+        return super().get_context_data(**kwargs)
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request,user)
         return redirect('/')
-    context = {
-        'form': form,
-    }
-    return render(request,"signup.html", context)
+
+class GuruRegisterView(CreateView):
+    model = User
+    form_class = GuruRegisterForm
+    template_name = 'signup.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['user_type'] = 'teacher'
+        return super().get_context_data(**kwargs)
+
+    def form_valid(self, form):
+        user = form.save()
+        #login(self.request,user)
+        return redirect('login')
+
 
 def logout_view(request):
     logout(request)

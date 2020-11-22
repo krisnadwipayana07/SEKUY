@@ -24,9 +24,10 @@ from accounts.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home,name="index"),
-    path('accounts/login/', login_view),
-    path('accounts/register/', register_view, name="signup"),
-    path('accounts/logout/', login_view),
+    path('accounts/login/', LoginView, name="login"),
+    path('accounts/register-murid/', MuridRegisterView.as_view(), name="register-murid"),
+    path('accounts/register-guru/', GuruRegisterView.as_view(), name="register-guru"),
+    path('accounts/logout/', logout_view, name="logout"),
 
     # Materi Link
     url(r'materi/delete/(?P<delete_id>[0-9]+)$', deleteMateri, name='hapusMateri'),
