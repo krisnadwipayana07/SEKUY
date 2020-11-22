@@ -11,9 +11,9 @@
         <thead>
             <tr>
             <th scope="col">#</th>
-            <th scope="col">Title</th>
-            <th scope="col">Slug</th>
-            <th scope="col">Body</th>
+            <th scope="col">Thumbnail</th>
+            <th scope="col">Nama Materi</th>
+            <th scope="col">Link</th>
             <th scope="col">Hapus</th>
             <th scope="col">Update</th>
             </tr>
@@ -24,12 +24,11 @@
                     <th scope="row">{{forloop.counter}}</th>
                     <td>{{ youtube.thumbnail }}</td>
                     <td>{{youtube.materi}}</td>
-                    <td>{{youtube.url}}</td>
-                    <td><a class="btn btn-danger" href="{% url 'hapusVideo' materi.id %}">Hapus</a></td>
-                    <td><a class="btn btn-warning" href="{% url 'updateVideo' materi.id %}">Update</a></td>
+                    <td>{{ youtube.url }}</td>
+                    <td><a class="btn btn-danger" href="{% url 'hapusVideo' youtube.id %}">Hapus</a></td>
+                    <td><a class="btn btn-warning" href="{% url 'updateVideo' youtube.id %}">Update</a></td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-    <a class="btn btn-primary" href="{% url 'tambahVideo'%}">Tambah</a>
 {% endblock content %}

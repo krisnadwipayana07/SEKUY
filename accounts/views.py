@@ -52,7 +52,7 @@ def listVideoPembelajaran(request):
         'semua_video':semua_video,
     }
 
-    return render(request,'Video Pembelajaran/video.html',context)
+    return render(request,'Video-Pembelajaran/video.html',context)
 
 def tambahVideo(request):
     video_form = VideoPembelajaranForm(request.POST or None)
@@ -68,7 +68,7 @@ def tambahVideo(request):
         "video_form" : video_form,
     }
 
-    return render(request,'Video Pembelajaran/tambahvideo.html',context)
+    return render(request,'Video-Pembelajaran/tambahvideo.html',context)
 
 def deleteVideo(request,delete_id):
     VideoPembelajaran.objects.filter(id=delete_id).delete()
@@ -82,20 +82,20 @@ def updateVideo(request,update_id):
         'link'  : video_update.link,
     }
 
-    video_form = MateriForm(request.POST or None, initial=data, instance=akun_update)
+    video_form = VideoPembelajaranForm(request.POST or None, initial=data, instance=video_update)
 
     if request.method == 'POST':
         if video_form.is_valid():
             video_form.save()
         
-        return redirect('materi')
+        return redirect('videopembelajaran')
 
     context = {
         "page_title" : "Update Video",
         "video_form" : video_form,
     }
 
-    return render(request,'Materi/tambahmateri.html',context)
+    return render(request,'Video-Pembelajaran/tambahvideo.html',context)
 
 
 
@@ -142,7 +142,7 @@ def updateMateri(request,update_id):
         'body'  : materi_update.body,
     }
 
-    materi_form = MateriForm(request.POST or None, initial=data, instance=akun_update)
+    materi_form = MateriForm(request.POST or None, initial=data, instance=materi_update)
 
     if request.method == 'POST':
         if materi_form.is_valid():
